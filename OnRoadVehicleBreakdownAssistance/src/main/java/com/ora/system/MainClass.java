@@ -4,6 +4,8 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 import com.ora.dao.UserDAO;
 import com.ora.dao.UserDAOImpl;
 import com.ora.entity.Feedback;
@@ -24,10 +26,11 @@ import com.ora.service.UserServiceImpl;
 import com.ora.validate.Validator;
 
 public class MainClass {
-	
+	final static Logger logger=Logger.getLogger(MainClass.class);
 
 	public static void main(String[] args) throws UserNotFoundException,MechanicNotFoundException {
-
+		MainClass mn=new MainClass();
+		mn.runMe("message");
 		AdminService ads = new AdminServiceImpl();
 		MechanicService mcn = new MechanicServiceImpl();
 		UserService ucn = new UserServiceImpl();
@@ -412,4 +415,20 @@ public class MainClass {
 			}
 	}
 	}
-	}}}
+	}}
+
+	private void runMe(String message) {
+		if(logger.isDebugEnabled()) {
+			logger.debug("This is debug:"+message);
+			
+		}
+		if(logger.isInfoEnabled()) {
+			logger.info("This is info:"+message);
+			
+		}
+		logger.warn("This is warn:"+message);
+		logger.error("This is error:"+message);
+		logger.fatal("This is fatal:"+message);
+		
+		
+	}}

@@ -3,6 +3,8 @@ package com.ora.dao;
 import java.util.List;
 import com.ora.entity.Mechanic;
 import com.ora.entity.User;
+import com.ora.exception.EmptyListException;
+import com.ora.service.MechanicServiceImpl;
 import com.ora.util.JPAUtil;
 
 import javax.persistence.EntityManager;
@@ -10,13 +12,18 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.apache.log4j.Logger;
+
 
 //import com.o.util.DBUtil;
 
+
 public class MechanicDAOImpl implements  MechanicDAO {
 	EntityManager manager;
+	final static Logger logger = Logger.getLogger(MechanicServiceImpl.class);
 	
 	public boolean addMechanic(Mechanic mechanic) {
+		logger.info("Adding Mechanic");
 		EntityManager entityManager =JPAUtil.getFactory().createEntityManager();
 		entityManager.getTransaction().begin();
 		entityManager.persist(mechanic);
@@ -26,6 +33,7 @@ public class MechanicDAOImpl implements  MechanicDAO {
 	}
 	
 	public List<Mechanic> viewMechanicDetails() {
+		logger.info("Displaying mechanic info");
 		EntityManager entityManager =JPAUtil.getEntityManager();
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
@@ -36,14 +44,25 @@ public class MechanicDAOImpl implements  MechanicDAO {
 	}
 	
 	public List<Mechanic> searchMechanic(String location){
+	
 		EntityManager entityManager =JPAUtil.getEntityManager();
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
 		Query q = entityManager.createQuery("FROM Mechanic m WHERE m.location=?");
 		q.setParameter(1,location);
 		List<Mechanic> list=q.getResultList();
+		try{if(list.equals(null))
+		{
+			 throw new EmptyListException("No Mechanic Found");
+		}
+		}
+		catch(EmptyListException e)
+		{
+			logger.error(e);
+		}
+		finally {	return list;}
 		
-		return list;
+		
 	}
 
 	

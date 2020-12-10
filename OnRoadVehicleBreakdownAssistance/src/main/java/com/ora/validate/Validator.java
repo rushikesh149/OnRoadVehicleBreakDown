@@ -2,15 +2,17 @@ package com.ora.validate;
 
 import javax.persistence.EntityManager;
 
+import org.apache.log4j.Logger;
 
 import com.ora.entity.Mechanic;
 import com.ora.entity.User;
 import com.ora.exception.MechanicNotFoundException;
 import com.ora.exception.UserNotFoundException;
+import com.ora.service.MechanicServiceImpl;
 import com.ora.util.JPAUtil;
 
 public class Validator {
-	
+	final static Logger logger = Logger.getLogger(Validator.class);
 	EntityManager entityManager=JPAUtil.getEntityManager();
 	public boolean validateAdmin(String adminId,String adminPassword) throws UserNotFoundException{
 		boolean flag=false;
@@ -19,7 +21,7 @@ public class Validator {
 		{
 			if(adminId.equals("Admin") && adminPassword.equals("Admin123"))
 			{
-				System.out.println("Validated");
+				
 				flag=true;
 			}
 			else
@@ -29,7 +31,7 @@ public class Validator {
 		}
 		catch(UserNotFoundException e)
 		{
-			e.getMessage();
+			logger.error(e.getMessage());
 		}
 		return flag;
 	}
@@ -41,7 +43,7 @@ public boolean validateMechanic(int loginMechanicId,String loginPassword) throws
 			
 			if(loginMechanicId==mechanic.getMechanicId() && loginPassword.equals(mechanic.getMechanicPassword()))
 			{
-				System.out.println("Validated");
+				logger.info("Validated");
 				flag=true;
 			}
 			else
@@ -51,7 +53,7 @@ public boolean validateMechanic(int loginMechanicId,String loginPassword) throws
 		}
 		catch(MechanicNotFoundException e)
 		{
-			e.getMessage();
+			logger.error(e.getMessage());
 		}
 		return flag;
 	}
@@ -64,7 +66,7 @@ public boolean validateUser(int loginUserId,String loginPassword) throws UserNot
 			
 			if(loginUserId==user.getUserId() && loginPassword.equals(user.getUserPassword()))
 			{
-				System.out.println("Validated");
+				logger.info("Validated");
 				flag=true;
 			}
 			else
@@ -74,7 +76,7 @@ public boolean validateUser(int loginUserId,String loginPassword) throws UserNot
 		}
 		catch(UserNotFoundException e)
 		{
-			e.getMessage();
+			logger.error(e.getMessage());
 		}
 		return flag;
 	}
