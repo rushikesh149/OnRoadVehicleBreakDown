@@ -29,6 +29,17 @@ public class MechanicDAOImplTest {
 		entityManager.close();
 		assertNotNull(list);
 	}
+	@Test
+	public void testAddMechanic1(Mechanic mechanic) {
+		EntityManager entityManager =JPAUtil.getFactory().createEntityManager();
+		entityManager.getTransaction().begin();
+		entityManager.persist(mechanic);
+		entityManager.getTransaction().commit();		
+		Query q = entityManager.createQuery("FROM Mechanic");
+		List<Mechanic> list=q.getResultList();
+		entityManager.close();
+		assertNull(list);
+	}
 
 	@Test
 	public void testViewMechanicDetails() {
@@ -39,6 +50,16 @@ public class MechanicDAOImplTest {
 		List<Mechanic> list=q.getResultList();
 		entityManager.close();
 		assertNotNull(list);
+	}
+	@Test
+	public void testViewMechanicDetails1() {
+		EntityManager entityManager =JPAUtil.getEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		entityTransaction.begin();		
+		Query q = entityManager.createQuery("FROM Mechanic");
+		List<Mechanic> list=q.getResultList();
+		entityManager.close();
+		assertNull(list);
 	}
 
 }

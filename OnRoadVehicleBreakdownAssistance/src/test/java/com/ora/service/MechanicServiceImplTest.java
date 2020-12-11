@@ -41,7 +41,10 @@ public class MechanicServiceImplTest {
 	public void testViewRequest() {
 		assertNotNull(sd.viewService());
 	}
-
+	@Test
+	public void testViewRequest1() {
+		assertNull(sd.viewService());
+	}
 	@Test
 	public void testViewFeedback() {
 		assertNotNull(fd.viewFeedback());

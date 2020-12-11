@@ -32,10 +32,14 @@ public class AdminServiceImplTest {
 	
 	@Test
 	public void testViewMechanicDetails(Mechanic mcn) {
-		mda.addMechanic(mcn);
-		assert(true);
+		
+		assertTrue(mda.addMechanic(mcn));
 	}
-
+	@Test
+	public void testViewMechanicDetails1(Mechanic mcn) {
+		
+		assertFalse(mda.addMechanic(mcn));
+	}
 	@Test
 	public void testViewUserDetails() {
 		assertNotNull(uda.viewUserDetails());

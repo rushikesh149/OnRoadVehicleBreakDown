@@ -28,6 +28,18 @@ public class FeedbackDAOImplTest {
 		assertNotNull(list);
 		
 	}
+	@Test
+	public void testAddFeedback1(Feedback feedback) {
+		EntityManager entityManager =JPAUtil.getFactory().createEntityManager();
+		entityManager.getTransaction().begin();
+		entityManager.persist(feedback);
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		Query q = entityManager.createQuery("FROM Feedback");
+		List<Feedback> list=q.getResultList();
+		assertNull(list);
+		
+	}
 
 	@Test
 	public void testViewFeedback() {
@@ -36,8 +48,16 @@ public class FeedbackDAOImplTest {
 		entityTransaction.begin();
 		Query q = entityManager.createQuery("FROM Feedback");
 		List<Feedback> list=q.getResultList();
-		System.out.println(list.toString());
-		assertNotNull( list);
+		assertNotNull(list);
+	}
+	@Test
+	public void testViewFeedback1() {
+		EntityManager entityManager =JPAUtil.getEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		entityTransaction.begin();
+		Query q = entityManager.createQuery("FROM Feedback");
+		List<Feedback> list=q.getResultList();
+		assertNull(list);;
 	}
 
 }

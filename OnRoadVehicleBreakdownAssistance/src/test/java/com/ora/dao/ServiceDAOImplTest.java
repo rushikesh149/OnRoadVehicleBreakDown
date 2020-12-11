@@ -30,6 +30,18 @@ public class ServiceDAOImplTest {
 		assertNotNull(list);
 		
 	}
+	@Test
+	public void testAddService1(Service service) {
+		EntityManager entityManager =JPAUtil.getEntityManager();
+		entityManager.getTransaction().begin();
+		entityManager.persist(service);
+		entityManager.getTransaction().commit();
+		Query q = entityManager.createQuery("FROM Service");
+		List<Service> list=q.getResultList();
+		entityManager.close();
+		assertNull(list);
+		
+	}
 
 	@Test
 	public void testViewService() {

@@ -1,6 +1,6 @@
 package com.ora.service;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -44,6 +44,16 @@ public class UserServiceImplTest {
 		entityManager.close();
 		assertNotNull(list);
 	}
+	@Test
+	public void testAddUser1(User user) {
+		EntityManager entityManager =JPAUtil.getEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		entityTransaction.begin();		
+		Query q = entityManager.createQuery("FROM User");
+		list=q.getResultList();
+		entityManager.close();
+		assertNull(list);
+	}
 
 	@Test
 	public void testUpdateUser() {
@@ -53,8 +63,7 @@ public class UserServiceImplTest {
 		Query q = entityManager.createQuery("FROM User");
 		List<Mechanic> list1=q.getResultList();
 		entityManager.close();
-		assert(list1.equals(list));
+		assertTrue(list1.equals(list));
 		
 	}
-
 }
